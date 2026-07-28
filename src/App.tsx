@@ -41,7 +41,6 @@ function App() {
     }
   }, [reloadKey])
 
-  // Derived, not stored: filter -> sort, each recomputed only when its inputs change.
   const filtered = useMemo(
     () => filterProducts(products, { categories, minRating }),
     [products, categories, minRating],
