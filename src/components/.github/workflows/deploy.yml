@@ -1,0 +1,58 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  buildand-test:
+    runs-on: ubantu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.jo
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Linter
+        run: npm run lint --if-present
+
+      - name: Run Tests
+        run: npm run test -- --watchAll=false --passWithNoTests
+
+      - name: Build production Bundle
+        run: npm run build
+        
+      # Save artificats for deployment
+      - name: Upload Build Artificates
+        uses: actions/upload-artificat@v4
+        with:
+          name: dist-files
+          path: dist
+
+deploy:
+  needs: build-and-test
+  if: github.ref == refs/heads/main' && github.event_name == 'push'
+  environment:
+    name: github-pages
+    url: ${{ steps.deployment.outputs.page_url }}
+  runs-on: ubantu-latest
+  steps:
+    - name: Deploy to github pages
+      id: deployment
+      uses: actions/deploy-pages@v4
+      
