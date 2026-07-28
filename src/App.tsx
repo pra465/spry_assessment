@@ -3,7 +3,7 @@ import './App.css'
 import Navbar from './components/Navbar'
 import Filters from './components/Filters'
 import SortBar from './components/SortBar'
-import ProductGrid from './components/ProductGrid'
+import ProductResults from './components/ProductResults'
 import GridSkeleton from './components/GridSkeleton'
 import EmptyState from './components/EmptyState'
 import ErrorState from './components/ErrorState'
@@ -65,7 +65,7 @@ function App() {
                 {sorted.length === 0 ? (
                   <EmptyState />
                 ) : (
-                  <ProductGrid
+                  <ProductResults
                     products={sorted}
                     favourites={favourites}
                     onToggleFavorite={toggleFavourite}
