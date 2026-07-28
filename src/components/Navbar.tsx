@@ -1,11 +1,15 @@
 import FavoritesCount from "./FavoritesCount"
 
-const Navbar = () => {
+type NavbarProps = {
+    favoritesCount: number
+}
+
+const Navbar = ({ favoritesCount }: NavbarProps) => {
     return (
         <header className="w-full border-b border-[#E6E5E0] bg-white">
-            <div className="mx-auto flex h-[60px] w-full items-center justify-between px-4 sm:h-[72px] sm:px-10">
+            <div className="mx-auto flex h-[60px] w-full max-w-[1440px] items-center justify-between px-4 sm:h-[72px] sm:px-10">
                 <a href='/' className="text-[19px] font-bold tracking-[-0.03em] text-[#14161A] sm:text-[22px]">SHOP</a>
-                <FavoritesCount count={0} />
+                <FavoritesCount count={favoritesCount} />
             </div>
         </header>
     )
